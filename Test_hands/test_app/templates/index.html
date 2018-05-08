@@ -1,0 +1,23 @@
+{% if order_form %}
+	<form action="/" method="post">
+		{% csrf_token %}
+		{{ order_form.as_p }}
+		<input type="submit" value="Заказать" />
+	</form>
+{% endif %}
+
+{% if phones %}
+	{{ phones }}
+{% endif %}
+
+{% if h2 %}
+	<h2>{{ h2 }}</h2>
+{% endif %}
+
+{% if orders %}
+	<ul>
+	{% for order in orders %}
+		<li>{{ order }}</li>
+	{% endfor %}
+	</ul>
+{% endif %}
