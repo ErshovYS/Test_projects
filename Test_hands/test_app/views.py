@@ -6,12 +6,13 @@ from django.template.context import RequestContext
 
 from test_app import forms, models
 
-
+#Получаем и обрабатываем заказ
 def order_form_view(request):
     if request.POST:
         orderform = forms.OrderForm(request.POST)
         if orderform.is_valid():
             params = orderform.cleaned_data
+			#Хотел было найти идеальное регулярное выражение для номеров, но нет...
             #phone = re.compile('^(?:\+|\d)[\d\-\(\) ]{4,12}\d$') 
             #phones = phone.findall(params['phone'])
             reg = re.compile('[^\+0-9 ]')
@@ -40,7 +41,7 @@ def order_form_view(request):
     return render_to_response("index.html", mdict,
                                               context_instance=RequestContext(request))
     
-#Делаем страницы номеров - показываем заказы этих номеров
+#По номеру телефона определяем наличие заказов и возвращаем их
 def ph_number(request, num):
     phonemodel = models.PhoneModel.objects.filter(phone_number=num).first()
     if phonemodel:
